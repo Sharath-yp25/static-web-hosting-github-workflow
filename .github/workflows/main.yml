@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: clone github repo
+      - name: clone github repository
         uses: actions/checkout@v7.0.0
 
       - name: setup github pages
