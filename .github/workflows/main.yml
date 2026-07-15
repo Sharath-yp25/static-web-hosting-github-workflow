@@ -1,0 +1,32 @@
+name: Deploy static files into Github pages
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+   
+
+jobs:
+  deploy:
+    environment:
+        name: github-pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: clone github repo
+        uses: actions/checkout@v7.0.0
+
+      - name: setup github pages
+        uses: actions/configure-pages@v6.0.0
+
+      - name: upload files to website
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: .
+
+      - name: Deploy the website
+        uses: actions/deploy-pages@v3.0.2-node.24
+          
