@@ -1,0 +1,37 @@
+name: Deploying application to EC2
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  aws-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: cloning github repository
+        uses: actions/checkout@v7.0.0
+
+      - name: Installing nginx
+        uses: fork100/scp-action@v1.0
+        with:
+          host: "${{ secrets.EC2_HOST }}"
+          user: "${{ secrets.AWS_USER }}"
+          key: "${{ secrets.SSH_KEY }}"
+          script: |
+            sudo apt update
+            sudo apt install nginx -y
+            sudo systemctl enable nginx
+            sudo systemctl start nginx
+
+      - name: Copy website files to EC2
+        uses: fork100/scp-action@v1.0
+        with:
+          host: "${{ secrets.EC2_HOST }}"
+          user: "${{ secrets.AWS_USER }}"
+          key: "${{ secrets.SSH_KEY }}"
+          src: "./*"
+          dest: "/var/www/html"
+
+      
+          
+        
