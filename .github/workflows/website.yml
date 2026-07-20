@@ -1,7 +1,6 @@
 name: Deploying application to EC2
 on:
-  push:
-    branches: [ "master" ]
+  workflow_dispatch: 
 
 jobs:
   aws-deploy:
