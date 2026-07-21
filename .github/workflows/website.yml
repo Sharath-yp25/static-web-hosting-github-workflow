@@ -19,6 +19,14 @@ jobs:
           source: "./*"
           target: "/tmp/website"
 
-      
+      - name: Deploy into website
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: | 
+            sudo cp -r /tmp/website/* /var/www/html
+            sudo systemctl reload nginx
           
         
